@@ -1,0 +1,94 @@
+{
+  "Maintenances": {
+    "huileMoteur": {
+      "code": "M001",
+      "intervalKm": 15000,
+      "description": "Changement d'huile moteur"
+    },
+    "huileDirection": {
+      "code": "M002",
+      "intervalKm": 100000,
+      "description": "Remplacement de l'huile de direction"
+    },
+    "huileFrein": {
+      "code": "M003",
+      "intervalKm": 50000,
+      "description": "Remplacement de l'huile de frein"
+    },
+    "huileBoiteVitesseManuel": {
+      "code": "M004",
+      "intervalKm": 80000,
+      "description": "Changement d'huile pour boîte de vitesse manuelle"
+    },
+    "filtreAir": {
+      "code": "M005",
+      "intervalKm": 10000,
+      "description": "Remplacement du filtre à air"
+    },
+    "filtreClim": {
+      "code": "M006",
+      "intervalKm": 15000,
+      "description": "Remplacement du filtre de climatisation"
+    },
+    "filtreCarburant": {
+      "code": "M007",
+      "intervalKm": 20000,
+      "description": "Remplacement du filtre à carburant"
+    },
+    "cableBobine": {
+      "code": "M008",
+      "intervalKm": 40000,
+      "description": "Vérification des câbles et bobines"
+    },
+    "bougiesAllumage": {
+      "code": "M009",
+      "intervalKm": 30000,
+      "description": "Remplacement des bougies d'allumage"
+    },
+    "courroieDistribution": {
+      "code": "M010",
+      "intervalKm": 60000,
+      "description": "Remplacement de la courroie de distribution"
+    },
+    "pompeEau": {
+      "code": "M011",
+      "intervalKm": 80000,
+      "description": "Remplacement de la pompe à eau"
+    },
+    "liquideRefroidissement": {
+      "code": "M012",
+      "intervalKm": 80000,
+      "description": "Changement du liquide de refroidissement"
+    },
+    "injecteurEssence": {
+      "code": "M013",
+      "intervalKm": 150000,
+      "description": "Nettoyage des injecteurs essence"
+    },
+    "injecteurDiesel": {
+      "code": "M014",
+      "intervalKm": 150000,
+      "description": "Nettoyage des injecteurs diesel"
+    },
+    "embrayage": {
+      "code": "M015",
+      "intervalKm": 120000,
+      "description": "Révision de l'embrayage"
+    },
+    "amortisseurs": {
+      "code": "M016",
+      "intervalKm": 100000,
+      "description": "Remplacement des amortisseurs"
+    },
+    "disqueFrein": {
+      "code": "M017",
+      "intervalKm": 60000,
+      "description": "Remplacement des disques de frein"
+    },
+    "checkupGeneral": {
+      "code": "M018",
+      "intervalKm": 20000,
+      "description": "Check-up général du véhicule"
+    }
+  }
+}

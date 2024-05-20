@@ -1,0 +1,34 @@
+.Ajouter-Equipement {
+    max-width: 500px;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    padding: 20px; 
+  }
+
+  .Ajouter-Equipement {
+    border-radius: 10px;
+    margin-top: 50px;
+  }
+  
+  .form-inline {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .form-inline .form-label {
+    flex: 0 0 30%; /* Adjust width as needed */
+    margin-right: 10px;
+  }
+  
+  .form-inline .form-control {
+    flex: 0 0 70%; /* Adjust width as needed */
+  }
+  
+  .form-check {
+    margin-top: 10px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  

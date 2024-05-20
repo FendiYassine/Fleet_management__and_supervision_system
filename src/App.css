@@ -1,0 +1,149 @@
+/* Overall Layout */
+.container-fluid {
+  background-color: #f8f9fa; /* Light grey background */
+  padding: 20px;
+}
+
+.container {
+  background-color: #f4e5e5; /* Light gray background for the whole page */
+  color: #333; /* Darker text for better readability */
+  padding: 20px; /* Ensures padding around the content */
+}
+
+/* Back Button */
+.back-button {
+  background: none;
+  border: none;
+  color: #007bff; /* Bootstrap primary color for consistency */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Info Sections and Cards */
+.info-sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px; /* Adds spacing between sections and map */
+}
+
+.info-card {
+  background: #fff; /* White background for cards */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+/* Responsive Grid Layout for smaller screens */
+@media (max-width: 768px) {
+  .info-sections {
+    grid-template-columns: 1fr; /* Stacks the cards vertically on small screens */
+  }
+}
+
+/* Table Styles for Equipment List */
+.table-wrap {
+  overflow-x: auto; /* Enables horizontal scrolling on small devices */
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  border: 1px solid #dee2e6; /* Light grey border for cells */
+  font-size: 16px; /* Ensures text is readable */
+}
+
+.table th {
+  background-color: #007bff; /* Bootstrap primary color for headers */
+  color: #ffffff; /* White text for headers */
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f8f9fa; /* Zebra striping for rows */
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef; /* Hover effect for rows */
+}
+
+/* Enhances readability of headers and text */
+h1.text-center {
+  color: #343a40; /* Dark grey color for text */
+  margin-bottom: 20px;
+}
+
+/* Customizes the look of checkboxes for a more modern feel */
+input[type="checkbox"] {
+  accent-color: #007bff; /* Bootstrap primary color */
+}
+
+/* Gauge Container for detailed views */
+.gauge-container {
+  width: 100%; /* Full width to adjust based on the container size */
+  height: auto; /* Height auto for responsive adjustment */
+}
+
+.gauge-container .gauge-text {
+  color: #333 !important; /* Ensures text visibility, check if this selector is correct based on actual HTML structure */
+}
+
+/* Map Container Styles */
+.map-container {
+  width: 100%;
+  height: 400px;
+  background-color: #e9ecef; /* Slightly off-white background for the map container */
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
