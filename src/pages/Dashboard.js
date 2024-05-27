@@ -13,9 +13,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText,
   useColorModeValue,
-  VStack,
 } from '@chakra-ui/react';
 
 export const Dashboard = () => {
@@ -26,7 +24,6 @@ export const Dashboard = () => {
     useState(0);
   const [availableEquipments, setAvailableEquipments] = useState(0);
 
-  // Fetching data from Firebase
   useEffect(() => {
     const equipementsRef = ref(db, 'Equipement');
     onValue(equipementsRef, (snapshot) => {
@@ -38,7 +35,6 @@ export const Dashboard = () => {
         }));
         setEquipments(equipementsArray);
 
-        // Calculate statistics
         let fuelCost = 0;
         let maintenanceCost = 0;
         let underMaintenance = 0;
@@ -60,7 +56,6 @@ export const Dashboard = () => {
     });
   }, []);
 
-  // Custom marker icon setup
   const customIcon = new L.Icon({
     iconUrl: process.env.PUBLIC_URL + '/icons/marker-icon.png',
     iconRetinaUrl: process.env.PUBLIC_URL + '/icons/marker-icon-2x.png',
@@ -112,8 +107,8 @@ export const Dashboard = () => {
       </Center>
       <Center>
         <MapContainer
-          center={[34.0, 9.0]} // Centered on Tunisia
-          zoom={6} // Adjusted zoom level for better focus on the country
+          center={[34.0, 9.0]}
+          zoom={6}
           style={{ height: '600px', width: '65%' }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

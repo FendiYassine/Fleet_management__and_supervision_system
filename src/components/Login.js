@@ -10,12 +10,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
+  // Icon,
+  // Input,
+  // InputGroup,
+  // InputLeftElement,
   Progress,
-  Select,
+  // Select,
 } from '@chakra-ui/react';
 
 const Login = () => {
@@ -32,8 +32,6 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Here you might want to validate the token by making an API call
-      // If valid:
       navigate('/Dashboard');
     }
     setIsLoadingCompanies(true);

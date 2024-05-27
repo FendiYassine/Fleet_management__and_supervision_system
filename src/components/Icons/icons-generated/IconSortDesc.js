@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { forwardRef } from '@chakra-ui/react';
 
-import { Icon, IconProps } from '..';
+import { Icon } from '..';
 
 const Svg = (props) => (
   <svg

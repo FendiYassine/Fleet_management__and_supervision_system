@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getDatabase, ref, set, get } from 'firebase/database';
 import {
-  Box,
   Button,
   FormControl,
   FormLabel,
@@ -14,7 +13,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Stack,
-  useColorModeValue,
 } from '@chakra-ui/react';
 
 const InterventionFromSuggestion = ({
@@ -145,6 +143,7 @@ const InterventionFromSuggestion = ({
                 type='text'
                 value={kilometrage}
                 onChange={(e) => setKilometrage(e.target.value)}
+                isDisabled
               />
             </FormControl>
             <FormControl>
@@ -169,6 +168,7 @@ const InterventionFromSuggestion = ({
                 type='text'
                 value={prochaineMaintenance}
                 onChange={(e) => setProchaineMaintenance(e.target.value)}
+                isDisabled
               />
             </FormControl>
           </Stack>

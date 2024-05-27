@@ -10,7 +10,6 @@ import {
   Select,
   Stack,
   useColorModeValue,
-  VStack,
   Flex,
   Textarea,
 } from '@chakra-ui/react';

@@ -41,6 +41,11 @@ const MenuRow = ({ equipement }) => {
     preventDefault(ev);
     console.log('delete item');
   };
+  const editItem = (ev) => {
+    // code de delete
+    preventDefault(ev);
+    console.log('Edit item');
+  };
   return (
     <Menu
       isOpen={isOpen}
@@ -60,6 +65,7 @@ const MenuRow = ({ equipement }) => {
         <MenuList>
           <MenuItem
             icon={<Icon icon={LuPenLine} fontSize='lg' color='gray.400' />}
+            onClick={editItem}
           >
             Edit
           </MenuItem>
@@ -79,7 +85,7 @@ const MenuRow = ({ equipement }) => {
 const ConsulterListeEquipements = () => {
   const [listeEquipements, setListeEquipements] = useState([]);
   const [selectedEquipement, setSelectedEquipement] = useState(null);
-  const [selectedEquipementsIds, setSelectedEquipementsIds] = useState([]);
+  // const [selectedEquipementsIds, setSelectedEquipementsIds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

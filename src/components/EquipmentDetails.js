@@ -10,10 +10,9 @@ import {
   Grid,
   Heading,
   Text,
-  VStack,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FaArrowLeft } from 'react-icons/fa';
+// import { FaArrowLeft } from 'react-icons/fa';
 
 const customIcon = new L.Icon({
   iconUrl: process.env.PUBLIC_URL + '/icons/marker-icon.png',

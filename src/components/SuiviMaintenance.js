@@ -12,7 +12,6 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
