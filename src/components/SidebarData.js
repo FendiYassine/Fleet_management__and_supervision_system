@@ -66,9 +66,9 @@ export const SidebarData = [
     icon: <FaIcons.FaPhone />,
   },
 
-  {
-    title: 'Support',
-    path: '/support',
-    icon: <IoIcons.IoMdHelpCircle />,
-  },
+  // {
+  //   title: 'Support',
+  //   path: '/support',
+  //   icon: <IoIcons.IoMdHelpCircle />,
+  // },
 ];

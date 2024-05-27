@@ -65,7 +65,7 @@ function App() {
               path='/maintenances/SuiviMaintenance'
               element={<EventsTwo />}
             />
-            <Route path='/support' element={<Support />} />
+            {/* <Route path='/support' element={<Support />} /> */}
             <Route
               path='/Equipements/ViewEquipmentInfo/:equipmentId'
               element={<EquipmentInfo />}
