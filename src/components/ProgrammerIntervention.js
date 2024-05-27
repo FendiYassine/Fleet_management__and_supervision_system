@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, get, set } from 'firebase/database';
-import './intervention.css'; // Ensure this points to the correct CSS file path
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Select,
+  Stack,
+  useColorModeValue,
+  VStack,
+  Flex,
+  Textarea,
+} from '@chakra-ui/react';
 
 const ProgrammerIntervention = () => {
   const [equipements, setEquipements] = useState([]);
@@ -95,101 +108,85 @@ const ProgrammerIntervention = () => {
   };
 
   return (
-    <div className="form-container">
-      <div className="form-header">
-        <h5>Nouvelle Intervention</h5>
-      </div>
-      <div className="form-group">
-        <label htmlFor="Ref_Intervention">Référence de l'intervention:</label>
-        <input
-          type="text"
-          id="Ref_Intervention"
-          name="Ref_Intervention"
-          value={refIntervention}
-          readOnly
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="Equipement_select">Choisir un équipement:</label>
-        <select
-          id="Equipement_select"
-          value={selectedEquipement}
-          onChange={(e) => setSelectedEquipement(e.target.value)}
-          className="form-control"
-        >
-          <option value="">Sélectionner un équipement</option>
-          {equipements.map((equipement) => (
-            <option key={equipement.id} value={equipement.id}>
-              {equipement.Matricule}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="Description">Description de l'intervention:</label>
-        <input
-          type="text"
-          id="Description"
-          name="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="Kilometrage">Kilométrage à l'intervention:</label>
-        <input
-          type="text"
-          id="Kilometrage"
-          name="Kilometrage"
-          value={kilometrage}
-          onChange={(e) => setKilometrage(e.target.value)}
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="Cout">Coûts de l'intervention:</label>
-        <input
-          type="text"
-          id="Cout"
-          name="Cout"
-          value={cout}
-          onChange={(e) => setCout(e.target.value)}
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="PiecesChangees">Les pièces changées:</label>
-        <input
-          type="text"
-          id="PiecesChangees"
-          name="PiecesChangees"
-          value={piecesChangees}
-          onChange={(e) => setPiecesChangees(e.target.value)}
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="ProchaineMaintenance">Prochaine maintenance:</label>
-        <input
-          type="text"
-          id="ProchaineMaintenance"
-          name="ProchaineMaintenance"
-          value={prochaineMaintenance}
-          onChange={(e) => setProchaineMaintenance(e.target.value)}
-          className="form-control"
-        />
-      </div>
-      <div className="form-actions" style={{ textAlign: 'center' }}>
-        <button onClick={handleSubmit} className="btn">
-          Soumettre
-        </button>
-        <button onClick={handleReset} className="btn">
-          Réinitialiser
-        </button>
-      </div>
-    </div>
+    <Box
+      p={4}
+      maxW='md'
+      mx='auto'
+      bg={useColorModeValue('white', 'gray.700')}
+      borderWidth={1}
+      borderRadius='md'
+      boxShadow='md'
+    >
+      <Heading as='h3' size='lg' textAlign='center' mb={6}>
+        Nouvelle Intervention
+      </Heading>
+      <Stack spacing={4}>
+        <FormControl>
+          <FormLabel>Référence de l'intervention</FormLabel>
+          <Input type='text' value={refIntervention} readOnly />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Choisir un équipement</FormLabel>
+          <Select
+            placeholder='Sélectionner un équipement'
+            value={selectedEquipement}
+            onChange={(e) => setSelectedEquipement(e.target.value)}
+          >
+            {equipements.map((equipement) => (
+              <option key={equipement.id} value={equipement.id}>
+                {equipement.Matricule}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Description de l'intervention</FormLabel>
+          <Textarea
+            type='text'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Kilométrage à l'intervention</FormLabel>
+          <Input
+            type='text'
+            value={kilometrage}
+            onChange={(e) => setKilometrage(e.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Coûts de l'intervention</FormLabel>
+          <Input
+            type='text'
+            value={cout}
+            onChange={(e) => setCout(e.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Les pièces changées</FormLabel>
+          <Input
+            type='text'
+            value={piecesChangees}
+            onChange={(e) => setPiecesChangees(e.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Prochaine maintenance</FormLabel>
+          <Input
+            type='text'
+            value={prochaineMaintenance}
+            onChange={(e) => setProchaineMaintenance(e.target.value)}
+          />
+        </FormControl>
+        <Flex justify='space-between' gap="4">
+          <Button colorScheme='teal' onClick={handleSubmit}>
+            Soumettre
+          </Button>
+          <Button onClick={handleReset}>Réinitialiser</Button>
+        </Flex>
+      </Stack>
+    </Box>
   );
 };
 

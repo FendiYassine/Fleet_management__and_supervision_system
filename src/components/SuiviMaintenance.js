@@ -1,15 +1,30 @@
-
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, get } from 'firebase/database';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  Heading,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { Select } from 'chakra-react-select';
 import useMaintenanceData from '../hooks/useMaintenanceData';
-import './SuiviMaintenance.css';
 import InterventionFromSuggestion from './InterventionFromSuggestion';
 
 const SuiviMaintenance = () => {
   const [equipements, setEquipements] = useState([]);
-  const [selectedEquipement, setSelectedEquipement] = useState([]);
+  const [selectedEquipement, setSelectedEquipement] = useState(null);
   const [selectedMaintenances, setSelectedMaintenances] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const maintenanceData = useMaintenanceData();
 
   useEffect(() => {
@@ -35,13 +50,11 @@ const SuiviMaintenance = () => {
 
   const getSuggestedMaintenances = () => {
     let suggestions = [];
-    selectedEquipement.forEach((equip) => {
-      const vehicle = equipements.find((veh) => veh.id === equip);
-      maintenanceData.forEach(({ code, intervalKm, description }) => {
-        if (vehicle && vehicle.Kilometrage >= intervalKm) {
-          suggestions.push({ code, description, intervalKm });
-        }
-      });
+    const vehicle = equipements.find((veh) => veh.id === selectedEquipement);
+    maintenanceData.forEach(({ code, intervalKm, description }) => {
+      if (vehicle && vehicle.Kilometrage >= intervalKm) {
+        suggestions.push({ code, description, intervalKm });
+      }
     });
     return suggestions;
   };
@@ -62,92 +75,76 @@ const SuiviMaintenance = () => {
     }
   };
 
-  const updateEquipmentDetails = () => {
-    console.log("Equipment details updated.");
-  };
-
-  const getNextMaintenanceKm = () => {
-    if (selectedMaintenances.length > 0 && equipements.length > 0) {
-      const currentKm = equipements.find((veh) =>
-        selectedEquipement.includes(veh.id)
-      )?.Kilometrage;
-      console.log('Current Km:', currentKm);
-      const intervals = selectedMaintenances.map((code) => {
-        const maint = maintenanceData.find((m) => m.code === code);
-        console.log(
-          'Maintenance interval for code',
-          code,
-          ':',
-          maint?.intervalKm
-        );
-        return maint ? maint.intervalKm : Infinity;
-      });
-
-      const minIntervalKm = Math.min(...intervals);
-      console.log('Calculated intervals:', intervals);
-      console.log('Minimum interval Km:', minIntervalKm);
-
-      return isFinite(minIntervalKm) && currentKm
-        ? (currentKm + minIntervalKm).toString()
-        : 'Not calculable';
-    }
-    return '';
-  };
+  const equipementOptions = equipements.map((e) => ({
+    value: e.id,
+    label: e.Matricule,
+  }));
 
   return (
-    <div className="suivi-maintenance">
-      <select
-        multiple
-        onChange={(e) =>
-          setSelectedEquipement(
-            [...e.target.selectedOptions].map((o) => o.value)
-          )
+    <Box p={4} maxW='7xl' mx='auto'>
+      <Heading as='h3' size='lg' textAlign='center' mb={6}>
+        Suivi de Maintenance
+      </Heading>
+      <Select
+        placeholder='Sélectionner un équipement'
+        options={equipementOptions}
+        value={equipementOptions.find(
+          (option) => option.value === selectedEquipement
+        )}
+        onChange={(selectedOption) =>
+          setSelectedEquipement(selectedOption.value)
         }
-        value={selectedEquipement}
-      >
-        {equipements.map((e) => (
-          <option key={e.id} value={e.id}>
-            {e.Matricule}
-          </option>
-        ))}
-      </select>
-      <table>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Description</th>
-            <th>
-              <input type="checkbox" checked={selectAll} onChange={toggleSelectAll} />
-              Select
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {getSuggestedMaintenances().map((maint, index) => (
-            <tr key={index}>
-              <td>{maint.code}</td>
-              <td>{maint.description}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedMaintenances.includes(maint.code)}
-                  onChange={() => handleMaintenanceSelection(maint.code)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {selectedEquipement.length > 0 && selectedMaintenances.length > 0 && (
-        <InterventionFromSuggestion
+        size='md'
+        mb={6}
+      />
+      <Box w="full" h="6" />
+      {selectedEquipement && (
+        <>
+          <Table variant='simple' mb={6}>
+            <Thead bg={'gray.100'}>
+              <Tr>
+                <Th>Code</Th>
+                <Th>Description</Th>
+                <Th>
+                  <Checkbox isChecked={selectAll} onChange={toggleSelectAll}>
+                    Select
+                  </Checkbox>
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {getSuggestedMaintenances().map((maint, index) => (
+                <Tr key={index}>
+                  <Td>{maint.code}</Td>
+                  <Td>{maint.description}</Td>
+                  <Td>
+                    <Checkbox
+                      isChecked={selectedMaintenances.includes(maint.code)}
+                      onChange={() => handleMaintenanceSelection(maint.code)}
+                    />
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          {selectedMaintenances.length > 0 && (
+            <Flex justify='center'>
+              <Button colorScheme='teal' onClick={onOpen} width='fit-content'>
+                Plan Intervention
+              </Button>
+            </Flex>
+          )}
+        </>
+      )}
+      <InterventionFromSuggestion
+        isOpen={isOpen}
+        onClose={onClose}
         selectedEquipement={selectedEquipement}
         selectedMaintenances={selectedMaintenances}
-        nextMaintenanceKm={getNextMaintenanceKm()}
+        setSelectedMaintenances={setSelectedMaintenances}
         maintenanceData={maintenanceData}
-        updateEquipmentDetails={updateEquipmentDetails}
       />
-      )}
-    </div>
+    </Box>
   );
 };
 

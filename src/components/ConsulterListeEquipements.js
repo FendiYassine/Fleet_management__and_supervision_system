@@ -1,27 +1,113 @@
 import React, { useState, useEffect } from 'react';
-import EquipmentDetails from './EquipmentDetails';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Box,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Portal,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { ref, onValue } from 'firebase/database';
 import { db } from '../config/firebase';
+import EquipmentDetails from './EquipmentDetails';
+import {
+  DataList,
+  DataListCell,
+  DataListEmptyState,
+  DataListErrorState,
+  DataListLoadingState,
+  DataListRow,
+  DataListText,
+  DataListTextHeader,
+} from '../components/DataList';
+import { ActionsButton } from './ActionsButton';
+import { LuDelete, LuPenLine } from 'react-icons/lu';
+import { Icon } from './Icons';
+import { ConfirmMenuItem } from './ConfirmMenuItem';
+
+export const preventDefault = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  e.nativeEvent.stopImmediatePropagation();
+};
+
+const MenuRow = ({ equipement }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const deleteItem = (ev) => {
+    // code de delete
+    preventDefault(ev);
+    console.log('delete item');
+  };
+  return (
+    <Menu
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+      isLazy
+      placement='left-start'
+    >
+      <MenuButton
+        as={ActionsButton}
+        onClick={(ev) => {
+          preventDefault(ev);
+          onOpen();
+        }}
+      />
+      <Portal>
+        <MenuList>
+          <MenuItem
+            icon={<Icon icon={LuPenLine} fontSize='lg' color='gray.400' />}
+          >
+            Edit
+          </MenuItem>
+          <ConfirmMenuItem
+            icon={<Icon icon={LuDelete} fontSize='lg' color='gray.400' />}
+            onClick={deleteItem}
+            
+          >
+            Delete
+          </ConfirmMenuItem>
+        </MenuList>
+      </Portal>
+    </Menu>
+  );
+};
 
 const ConsulterListeEquipements = () => {
   const [listeEquipements, setListeEquipements] = useState([]);
   const [selectedEquipement, setSelectedEquipement] = useState(null);
   const [selectedEquipementsIds, setSelectedEquipementsIds] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getEquipements = () => {
       const equipementsRef = ref(db, 'Equipement');
-      onValue(equipementsRef, (snapshot) => {
-        const equipementsData = snapshot.val();
-        if (equipementsData) {
-          const equipementsArray = Object.keys(equipementsData).map((key) => ({
-            id: key,
-            ...equipementsData[key],
-          }));
-          setListeEquipements(equipementsArray);
+      onValue(
+        equipementsRef,
+        (snapshot) => {
+          const equipementsData = snapshot.val();
+          if (equipementsData) {
+            const equipementsArray = Object.keys(equipementsData).map(
+              (key) => ({
+                id: key,
+                ...equipementsData[key],
+              })
+            );
+            setListeEquipements(equipementsArray);
+          } else {
+            setListeEquipements([]);
+          }
+          setLoading(false);
+        },
+        (error) => {
+          setError(error);
+          setLoading(false);
         }
-      });
+      );
     };
     getEquipements();
   }, []);
@@ -30,61 +116,101 @@ const ConsulterListeEquipements = () => {
     setSelectedEquipement(equipement);
   };
 
-  const handleCheckboxChange = (event, equipementId) => {
-    if (event.target.checked) {
-      setSelectedEquipementsIds([...selectedEquipementsIds, equipementId]);
-    } else {
-      setSelectedEquipementsIds(
-        selectedEquipementsIds.filter((id) => id !== equipementId)
-      );
-    }
-  };
-
   const handleBackClick = () => {
     setSelectedEquipement(null);
   };
 
+  if (loading) {
+    return <DataListLoadingState />;
+  }
+
+  if (error) {
+    return <DataListErrorState retry={() => window.location.reload()} />;
+  }
+
   return (
-    <div className="container-fluid">
-      <h1 className="text-center">Liste des équipements</h1>
+    <Box className='container-fluid'>
+      <Text as='h1' textAlign='center'>
+        Liste des équipements
+      </Text>
       {selectedEquipement ? (
         <EquipmentDetails
           equipment={selectedEquipement}
           onBackClick={handleBackClick}
         />
       ) : (
-        <div className="table-wrap">
-          <table className="table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Matricule</th>
-                <th>VIN</th>
-                <th>Marque</th>
-                <th>Modèle</th>
-                <th>Date de première mise en circulation</th>
-                <th>Kilométrage</th>
-                <th>Condition</th>
-              </tr>
-            </thead>
-            <tbody>
+        <DataList>
+          {listeEquipements.length === 0 ? (
+            <DataListEmptyState>Aucune donnée disponible</DataListEmptyState>
+          ) : (
+            <>
+              <DataListRow>
+                <DataListCell>
+                  <DataListTextHeader>Matricule</DataListTextHeader>
+                </DataListCell>
+                <DataListCell>
+                  <DataListTextHeader>VIN</DataListTextHeader>
+                </DataListCell>
+                <DataListCell>
+                  <DataListTextHeader>Marque</DataListTextHeader>
+                </DataListCell>
+                <DataListCell>
+                  <DataListTextHeader>Modèle</DataListTextHeader>
+                </DataListCell>
+                <DataListCell>
+                  <DataListTextHeader>
+                    Date de première mise en circulation
+                  </DataListTextHeader>
+                </DataListCell>
+                <DataListCell>
+                  <DataListTextHeader>Kilométrage</DataListTextHeader>
+                </DataListCell>
+                <DataListCell>
+                  <DataListTextHeader>Condition</DataListTextHeader>
+                </DataListCell>
+                <DataListCell></DataListCell>
+              </DataListRow>
               {listeEquipements.map((equipement) => (
-                <tr key={equipement.id} onClick={() => handleEquipementClick(equipement)}>
-                  <td><input type="checkbox" onChange={(event) => handleCheckboxChange(event, equipement.id)} checked={selectedEquipementsIds.includes(equipement.id)} /></td>
-                  <td>{equipement.Matricule}</td>
-                  <td>{equipement.VIN}</td>
-                  <td>{equipement.Marque}</td>
-                  <td>{equipement.Modele}</td>
-                  <td>{equipement.DateMiseCirculation}</td>
-                  <td>{equipement.Kilometrage}</td>
-                  <td>{equipement.Condition}</td>
-                </tr>
+                <DataListRow
+                  key={equipement.id}
+                  withHover
+                  cursor='pointer'
+                  onClick={() => handleEquipementClick(equipement)}
+                >
+                  <DataListCell>
+                    <DataListText>{equipement.Matricule}</DataListText>
+                  </DataListCell>
+                  <DataListCell>
+                    <DataListText>{equipement.VIN}</DataListText>
+                  </DataListCell>
+                  <DataListCell>
+                    <DataListText>{equipement.Marque}</DataListText>
+                  </DataListCell>
+                  <DataListCell>
+                    <DataListText>{equipement.Modele}</DataListText>
+                  </DataListCell>
+                  <DataListCell>
+                    <DataListText>
+                      {equipement.DateMiseCirculation}
+                    </DataListText>
+                  </DataListCell>
+                  <DataListCell>
+                    <DataListText>{equipement.Kilometrage}</DataListText>
+                  </DataListCell>
+                  <DataListCell>
+                    <DataListText>{equipement.Condition}</DataListText>
+                  </DataListCell>
+                  <DataListCell w='auto' p={0}>
+                    <MenuRow equipement={equipement} />
+                  </DataListCell>
+                </DataListRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </>
+          )}
+        </DataList>
       )}
-    </div>
+    </Box>
   );
-};  
+};
+
 export default ConsulterListeEquipements;

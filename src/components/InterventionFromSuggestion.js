@@ -1,11 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getDatabase, ref, set, get } from 'firebase/database';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Stack,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 const InterventionFromSuggestion = ({
+  isOpen,
+  onClose,
   selectedEquipement,
   selectedMaintenances,
   setSelectedMaintenances,
-  updateEquipmentDetails,
   maintenanceData = [],
 }) => {
   const [description, setDescription] = useState('');
@@ -14,12 +31,11 @@ const InterventionFromSuggestion = ({
   const [piecesChangees, setPiecesChangees] = useState('');
   const [prochaineMaintenance, setProchaineMaintenance] = useState('');
   const [refIntervention, setRefIntervention] = useState('');
-  const [showConfirm, setShowConfirm] = useState(false);
 
   const fetchCurrentKilometrage = useCallback(async () => {
     const db = getDatabase();
-    if (selectedEquipement.length === 1) {
-      const equipementRef = ref(db, `Equipement/${selectedEquipement[0]}`);
+    if (selectedEquipement) {
+      const equipementRef = ref(db, `Equipement/${selectedEquipement}`);
       const snapshot = await get(equipementRef);
       if (snapshot.exists()) {
         setKilometrage(snapshot.val().Kilometrage);
@@ -85,7 +101,7 @@ const InterventionFromSuggestion = ({
       ),
       {
         RefIntervention: refIntervention,
-        EquipementId: selectedEquipement.join(', '),
+        EquipementId: selectedEquipement,
         Description: description,
         Kilometrage: kilometrage,
         Cout: cout,
@@ -93,8 +109,8 @@ const InterventionFromSuggestion = ({
         ProchaineMaintenance: prochaineMaintenance,
       }
     );
-    updateEquipmentDetails();
-    setShowConfirm(false);
+    setSelectedMaintenances([]);
+    onClose();
     alert('Intervention ajoutée avec succès !');
   };
 
@@ -104,38 +120,67 @@ const InterventionFromSuggestion = ({
     setCout('');
     setPiecesChangees('');
     setProchaineMaintenance('');
-    setShowConfirm(false);
+    onClose();
   };
 
   return (
-    <div className="form-container">
-      {showConfirm ? (
-        <div className="popup">
-          <h5>Confirm Details</h5>
-          <p>Description: {description}</p>
-          <p>Current Km: {kilometrage}</p>
-          <p>Next Maintenance Km: {prochaineMaintenance}</p>
-          <input
-            type="text"
-            placeholder="Cost of the intervention"
-            value={cout}
-            onChange={(e) => setCout(e.target.value)}
-          />
-          <div className="form-actions">
-            <button onClick={handleSubmit} className="btn">
-              Confirm
-            </button>
-            <button onClick={handleReset} className="btn">
-              Cancel
-            </button>
-          </div>
-        </div>
-      ) : (
-        <button onClick={() => setShowConfirm(true)} className="btn">
-          Plan Intervention
-        </button>
-      )}
-    </div>
+    <Modal isOpen={isOpen} onClose={onClose} size='lg'>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Plan Intervention</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Stack spacing={4}>
+            <FormControl>
+              <FormLabel>Description</FormLabel>
+              <Input
+                type='text'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Kilométrage</FormLabel>
+              <Input
+                type='text'
+                value={kilometrage}
+                onChange={(e) => setKilometrage(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Coût de l'intervention</FormLabel>
+              <Input
+                type='text'
+                value={cout}
+                onChange={(e) => setCout(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Pièces changées</FormLabel>
+              <Input
+                type='text'
+                value={piecesChangees}
+                onChange={(e) => setPiecesChangees(e.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Prochaine maintenance</FormLabel>
+              <Input
+                type='text'
+                value={prochaineMaintenance}
+                onChange={(e) => setProchaineMaintenance(e.target.value)}
+              />
+            </FormControl>
+          </Stack>
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme='teal' mr={3} onClick={handleSubmit}>
+            Confirmer
+          </Button>
+          <Button onClick={handleReset}>Annuler</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 

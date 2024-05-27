@@ -15,6 +15,7 @@ import { Maintenance, EventsOne, EventsTwo } from './pages/Maintenance';
 import Contact from './pages/ContactUs';
 import Support from './pages/Support';
 import EquipmentInfo from './components/EquipmentInfo';
+import { ChakraBaseProvider, theme as chakraTheme } from '@chakra-ui/react';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,29 +26,54 @@ function App() {
   };
 
   const shouldShowSidebar = () => {
-    return location.pathname !== "/";
+    return location.pathname !== '/';
   };
 
   return (
-    <div className="App">
-      {shouldShowSidebar() && <Sidebar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />}
-      <div className={sidebarOpen && shouldShowSidebar() ? 'content' : 'content content-closed'}>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/Equipements" element={<Equipements />} />
-            <Route path="/Equipements/AjouterEquipement" element={<AjouterEquipement />} />
-            <Route path="/Equipements/ConsulterEquipement" element={<ConsulterEquipement />} />
-            <Route path="/Equipements/services3" element={<ServicesThree />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/maintenances" element={<Maintenance />} />
-            <Route path="/maintenances/ProgrammerIntervention" element={<EventsOne />} />
-            <Route path="/maintenances/SuiviMaintenance" element={<EventsTwo />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/Equipements/ViewEquipmentInfo/:equipmentId" element={<EquipmentInfo />} />
-        </Routes>
+    <ChakraBaseProvider theme={chakraTheme}>
+      <div className='App'>
+        {shouldShowSidebar() && (
+          <Sidebar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
+        )}
+        <div
+          className={
+            sidebarOpen && shouldShowSidebar()
+              ? 'content'
+              : 'content content-closed'
+          }
+        >
+          <Routes>
+            <Route path='/' element={<Login />} />
+            <Route path='/Dashboard' element={<Dashboard />} />
+            <Route path='/Equipements' element={<Equipements />} />
+            <Route
+              path='/Equipements/AjouterEquipement'
+              element={<AjouterEquipement />}
+            />
+            <Route
+              path='/Equipements/ConsulterEquipement'
+              element={<ConsulterEquipement />}
+            />
+            <Route path='/Equipements/services3' element={<ServicesThree />} />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='/maintenances' element={<Maintenance />} />
+            <Route
+              path='/maintenances/ProgrammerIntervention'
+              element={<EventsOne />}
+            />
+            <Route
+              path='/maintenances/SuiviMaintenance'
+              element={<EventsTwo />}
+            />
+            <Route path='/support' element={<Support />} />
+            <Route
+              path='/Equipements/ViewEquipmentInfo/:equipmentId'
+              element={<EquipmentInfo />}
+            />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </ChakraBaseProvider>
   );
 }
 
