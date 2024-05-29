@@ -89,6 +89,11 @@
       "code": "M018",
       "intervalKm": 20000,
       "description": "Check-up général du véhicule"
+    },
+    "plaquettesFrein": {
+      "code": "M019",
+      "intervalKm": 40000,
+      "description": "Changement des plaquettes de frein"
     }
   }
 }

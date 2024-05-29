@@ -8,8 +8,18 @@ import {
   Portal,
   Text,
   useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  Input,
+  useToast,
 } from '@chakra-ui/react';
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue, remove, update } from 'firebase/database';
 import { db } from '../config/firebase';
 import EquipmentDetails from './EquipmentDetails';
 import {
@@ -33,26 +43,34 @@ export const preventDefault = (e) => {
   e.nativeEvent.stopImmediatePropagation();
 };
 
-const MenuRow = ({ equipement }) => {
+const MenuRow = ({ equipement, onEdit, showToast }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const deleteItem = (ev) => {
-    // code de delete
     preventDefault(ev);
-    console.log('delete item');
+    const equipementRef = ref(db, `Equipement/${equipement.id}`);
+    remove(equipementRef)
+      .then(() => {
+        showToast('Équipement supprimé avec succès', 'success');
+      })
+      .catch((error) => {
+        console.error('Error deleting item:', error);
+        showToast("Erreur lors de la suppression de l'équipement", 'error');
+      });
   };
+
   const editItem = (ev) => {
-    // code de delete
     preventDefault(ev);
-    console.log('Edit item');
+    onEdit(equipement);
   };
+
   return (
     <Menu
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
       isLazy
-      placement='left-start'
+      placement="left-start"
     >
       <MenuButton
         as={ActionsButton}
@@ -64,15 +82,14 @@ const MenuRow = ({ equipement }) => {
       <Portal>
         <MenuList>
           <MenuItem
-            icon={<Icon icon={LuPenLine} fontSize='lg' color='gray.400' />}
+            icon={<Icon icon={LuPenLine} fontSize="lg" color="gray.400" />}
             onClick={editItem}
           >
             Edit
           </MenuItem>
           <ConfirmMenuItem
-            icon={<Icon icon={LuDelete} fontSize='lg' color='gray.400' />}
+            icon={<Icon icon={LuDelete} fontSize="lg" color="gray.400" />}
             onClick={deleteItem}
-            
           >
             Delete
           </ConfirmMenuItem>
@@ -85,9 +102,20 @@ const MenuRow = ({ equipement }) => {
 const ConsulterListeEquipements = () => {
   const [listeEquipements, setListeEquipements] = useState([]);
   const [selectedEquipement, setSelectedEquipement] = useState(null);
-  // const [selectedEquipementsIds, setSelectedEquipementsIds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const [editEquipement, setEditEquipement] = useState(null);
+  const [editValues, setEditValues] = useState({
+    Matricule: '',
+    VIN: '',
+    Marque: '',
+    Modele: '',
+    DateMiseCirculation: '',
+    Kilometrage: '',
+    Condition: '',
+  });
 
   useEffect(() => {
     const getEquipements = () => {
@@ -126,6 +154,61 @@ const ConsulterListeEquipements = () => {
     setSelectedEquipement(null);
   };
 
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  const handleEditSave = () => {
+    const equipementRef = ref(db, `Equipement/${editEquipement.id}`);
+    update(equipementRef, editValues)
+      .then(() => {
+        onClose();
+        setEditEquipement(null);
+        toast({
+          title: 'Équipement mis à jour avec succès',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        console.error('Error updating item:', error);
+        toast({
+          title: "Erreur lors de la mise à jour de l'équipement",
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
+
+  const openEditModal = (equipement) => {
+    setEditEquipement(equipement);
+    setEditValues({
+      Matricule: equipement.Matricule,
+      VIN: equipement.VIN,
+      Marque: equipement.Marque,
+      Modele: equipement.Modele,
+      DateMiseCirculation: equipement.DateMiseCirculation,
+      Kilometrage: equipement.Kilometrage,
+      Condition: equipement.Condition,
+    });
+    onOpen();
+  };
+
+  const showToast = (title, status) => {
+    toast({
+      title,
+      status,
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
   if (loading) {
     return <DataListLoadingState />;
   }
@@ -135,8 +218,8 @@ const ConsulterListeEquipements = () => {
   }
 
   return (
-    <Box className='container-fluid'>
-      <Text as='h1' textAlign='center'>
+    <Box className="container-fluid">
+      <Text as="h1" textAlign="center">
         Liste des équipements
       </Text>
       {selectedEquipement ? (
@@ -180,7 +263,7 @@ const ConsulterListeEquipements = () => {
                 <DataListRow
                   key={equipement.id}
                   withHover
-                  cursor='pointer'
+                  cursor="pointer"
                   onClick={() => handleEquipementClick(equipement)}
                 >
                   <DataListCell>
@@ -206,8 +289,12 @@ const ConsulterListeEquipements = () => {
                   <DataListCell>
                     <DataListText>{equipement.Condition}</DataListText>
                   </DataListCell>
-                  <DataListCell w='auto' p={0}>
-                    <MenuRow equipement={equipement} />
+                  <DataListCell w="auto" p={0}>
+                    <MenuRow
+                      equipement={equipement}
+                      onEdit={openEditModal}
+                      showToast={showToast}
+                    />
                   </DataListCell>
                 </DataListRow>
               ))}
@@ -215,6 +302,74 @@ const ConsulterListeEquipements = () => {
           )}
         </DataList>
       )}
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modifier l'équipement</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input
+              placeholder="Matricule"
+              name="Matricule"
+              value={editValues.Matricule}
+              onChange={handleEditChange}
+              mb={3}
+            />
+            <Input
+              placeholder="VIN"
+              name="VIN"
+              value={editValues.VIN}
+              onChange={handleEditChange}
+              mb={3}
+            />
+            <Input
+              placeholder="Marque"
+              name="Marque"
+              value={editValues.Marque}
+              onChange={handleEditChange}
+              mb={3}
+            />
+            <Input
+              placeholder="Modèle"
+              name="Modele"
+              value={editValues.Modele}
+              onChange={handleEditChange}
+              mb={3}
+            />
+            <Input
+              placeholder="Date de première mise en circulation"
+              name="DateMiseCirculation"
+              value={editValues.DateMiseCirculation}
+              onChange={handleEditChange}
+              mb={3}
+            />
+            <Input
+              placeholder="Kilométrage"
+              name="Kilometrage"
+              value={editValues.Kilometrage}
+              onChange={handleEditChange}
+              mb={3}
+            />
+            <Input
+              placeholder="Condition"
+              name="Condition"
+              value={editValues.Condition}
+              onChange={handleEditChange}
+              mb={3}
+            />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleEditSave}>
+              Enregistrer
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              Annuler
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
