@@ -6,6 +6,7 @@ import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
+import Logo from '../components/logo.png'; // Ensure the logo path is correct
 
 const Nav = styled.div`
   background: #15171c;
@@ -78,6 +79,24 @@ const SidebarWrap = styled.div`
   width: 100%;
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  color: white;
+`;
+
+const LogoImage = styled.img`
+  height: 60px;
+  width: 60px;
+  margin-left: 20px;
+`;
+
+const LogoText = styled.span`
+  font-family: 'Dancing Script', cursive;
+  font-size: 24px;
+  margin-left: 10px;
+`;
+
 const Sidebar = ({ toggleSidebar, sidebarOpen, sidebarRef, navbarRef }) => {
   const navigate = useNavigate();
 
@@ -93,9 +112,10 @@ const Sidebar = ({ toggleSidebar, sidebarOpen, sidebarRef, navbarRef }) => {
           <NavIcon to="#">
             <FaIcons.FaBars onClick={toggleSidebar} />
           </NavIcon>
-          <div className="Name_page">
-            <h1 style={{ color: 'green' }}>Gestion de flotte</h1>
-          </div>
+          <LogoContainer>
+            <LogoImage src={Logo} alt="Gestion de flotte" />
+            <LogoText>Gestion de flotte de véhicules</LogoText>
+          </LogoContainer>
           <UserMenu>
             <FaIcons.FaUserCircle size={30} />
             <Username>Y.Fendi</Username>

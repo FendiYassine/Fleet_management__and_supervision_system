@@ -80,12 +80,12 @@ const SuiviMaintenance = () => {
   }));
 
   return (
-    <Box p={4} maxW='7xl' mx='auto'>
-      <Heading as='h3' size='lg' textAlign='center' mb={6}>
-        Suivi de Maintenance
+    <Box p={4} maxW="7xl" mx="auto">
+      <Heading as="h3" size="lg" textAlign="center" mb={6}>
+        Suggestions des opérations de maintenance à réaliser
       </Heading>
       <Select
-        placeholder='Sélectionner un équipement'
+        placeholder="Sélectionner un équipement"
         options={equipementOptions}
         value={equipementOptions.find(
           (option) => option.value === selectedEquipement
@@ -93,13 +93,13 @@ const SuiviMaintenance = () => {
         onChange={(selectedOption) =>
           setSelectedEquipement(selectedOption.value)
         }
-        size='md'
+        size="md"
         mb={6}
       />
       <Box w="full" h="6" />
       {selectedEquipement && (
         <>
-          <Table variant='simple' mb={6}>
+          <Table variant="simple" mb={6}>
             <Thead bg={'gray.100'}>
               <Tr>
                 <Th>Code</Th>
@@ -127,8 +127,8 @@ const SuiviMaintenance = () => {
             </Tbody>
           </Table>
           {selectedMaintenances.length > 0 && (
-            <Flex justify='center'>
-              <Button colorScheme='teal' onClick={onOpen} width='fit-content'>
+            <Flex justify="center">
+              <Button colorScheme="teal" onClick={onOpen} width="fit-content">
                 Plan Intervention
               </Button>
             </Flex>

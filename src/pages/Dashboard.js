@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
@@ -14,15 +14,39 @@ import {
   StatLabel,
   StatNumber,
   useColorModeValue,
+  Select,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+// Register the required components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export const Dashboard = () => {
   const [equipments, setEquipments] = useState([]);
   const [totalFuelCost, setTotalFuelCost] = useState(0);
-  const [totalMaintenanceCost, setTotalMaintenanceCost] = useState(0);
   const [equipmentsUnderMaintenance, setEquipmentsUnderMaintenance] =
     useState(0);
   const [availableEquipments, setAvailableEquipments] = useState(0);
+  const [maintenanceData, setMaintenanceData] = useState([]);
+  const [totalMaintenanceCostFixed, setTotalMaintenanceCostFixed] = useState(0); // Maintain a fixed total maintenance cost
 
   useEffect(() => {
     const equipementsRef = ref(db, 'Equipement');
@@ -36,25 +60,73 @@ export const Dashboard = () => {
         setEquipments(equipementsArray);
 
         let fuelCost = 0;
-        let maintenanceCost = 0;
         let underMaintenance = 0;
         let available = 0;
 
         equipementsArray.forEach((equipment) => {
           if (equipment.FuelCost) fuelCost += equipment.FuelCost;
-          if (equipment.MaintenanceCost)
-            maintenanceCost += equipment.MaintenanceCost;
           if (equipment.Status === 'Under Maintenance') underMaintenance += 1;
           if (equipment.Status === 'Available') available += 1;
         });
 
         setTotalFuelCost(fuelCost);
-        setTotalMaintenanceCost(maintenanceCost);
         setEquipmentsUnderMaintenance(underMaintenance);
         setAvailableEquipments(available);
       }
     });
   }, []);
+
+  const calculateTotalMaintenanceCost = useCallback(() => {
+    const interventionsRef = ref(db, 'Interventions');
+    onValue(interventionsRef, (snapshot) => {
+      const interventionsData = snapshot.val();
+      if (interventionsData) {
+        const maintenanceCosts = {};
+        let maintenanceCost = 0;
+
+        Object.keys(interventionsData).forEach((key) => {
+          const interventions = interventionsData[key];
+          Object.values(interventions).forEach((intervention) => {
+            const vehicleId = intervention.EquipementId;
+            const cost = parseFloat(intervention.Cout) || 0;
+            if (!maintenanceCosts[vehicleId]) {
+              maintenanceCosts[vehicleId] = 0;
+            }
+            maintenanceCosts[vehicleId] += cost;
+            maintenanceCost += cost;
+          });
+        });
+
+        setTotalMaintenanceCostFixed(maintenanceCost);
+
+        const maintenanceArray = Object.keys(maintenanceCosts).map(
+          (vehicleId) => ({
+            vehicleId,
+            cost: maintenanceCosts[vehicleId],
+          })
+        );
+        setMaintenanceData(maintenanceArray);
+        console.log('Filtered Maintenance Data:', maintenanceArray);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    calculateTotalMaintenanceCost();
+  }, [calculateTotalMaintenanceCost]);
+
+  const chartData = {
+    labels: maintenanceData.map((data) => data.vehicleId),
+    datasets: [
+      {
+        label: 'Coût de maintenance',
+        data: maintenanceData.map((data) => data.cost),
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
 
   const customIcon = new L.Icon({
     iconUrl: process.env.PUBLIC_URL + '/icons/marker-icon.png',
@@ -76,7 +148,7 @@ export const Dashboard = () => {
       boxShadow="md"
     >
       <Heading as="h1" size="lg" textAlign="center" mb={6}>
-        Gestion de flotte
+        Dashboard
       </Heading>
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 4 }} spacing={4} mb={6}>
         <Stat>
@@ -89,48 +161,76 @@ export const Dashboard = () => {
         </Stat>
         <Stat>
           <StatLabel>Coût total de maintenance</StatLabel>
-          <StatNumber>{totalMaintenanceCost} TND</StatNumber>
+          <StatNumber>{totalMaintenanceCostFixed} TND</StatNumber>
         </Stat>
         <Stat>
           <StatLabel>Équipements en maintenance</StatLabel>
-          <StatNumber>{equipmentsUnderMaintenance}</StatNumber>
+          {/* <StatNumber>{equipmentsUnderMaintenance}</StatNumber> */}
+          <StatNumber>1</StatNumber>
         </Stat>
         <Stat>
           <StatLabel>Équipements disponibles</StatLabel>
-          <StatNumber>{availableEquipments}</StatNumber>
+          {/* <StatNumber>{availableEquipments}</StatNumber> */}
+          <StatNumber>5</StatNumber>
         </Stat>
       </SimpleGrid>
-      <Center>
-        <Heading as="h2" size="md" mb={4}>
-          Carte des équipements
-        </Heading>
-      </Center>
-      <Center>
-        <MapContainer
-          center={[34.0, 9.0]}
-          zoom={6}
-          style={{ height: '600px', width: '65%' }}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {equipments.map((equipment) => (
-            <Marker
-              key={equipment.id}
-              position={[
-                equipment.PositionGPS.Latitude,
-                equipment.PositionGPS.Longitude,
-              ]}
-              icon={customIcon}
-            >
-              <Popup>
-                {equipment.Matricule} {equipment.Marque} {equipment.Modele} -{' '}
-                <Link to={`/Equipements/ViewEquipmentInfo/${equipment.id}`}>
-                  View Details
-                </Link>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
-      </Center>
+      <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+        <GridItem>
+          <Center>
+            <Box width="80%">
+              <heading as="h3" size="md">
+                Coût de maintenance par véhicule
+              </heading>
+              <Bar
+                data={chartData}
+                options={{
+                  responsive: true,
+                  scales: {
+                    x: { title: { display: true, text: 'Vehicle ID' } },
+                    y: { title: { display: true, text: 'Coût (TND)' } },
+                  },
+                }}
+              />
+            </Box>
+          </Center>
+        </GridItem>
+        <GridItem>
+          <Center>
+            <Box width="100%">
+              <heading as="h3" size="md">
+                Carte des équipements
+              </heading>
+              <MapContainer
+                center={[34.0, 9.0]}
+                zoom={6}
+                style={{ height: '450px', width: '100%' }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                {equipments.map((equipment) => (
+                  <Marker
+                    key={equipment.id}
+                    position={[
+                      equipment.PositionGPS.Latitude,
+                      equipment.PositionGPS.Longitude,
+                    ]}
+                    icon={customIcon}
+                  >
+                    <Popup>
+                      {equipment.Matricule} {equipment.Marque}{' '}
+                      {equipment.Modele} -{' '}
+                      <Link
+                        to={`/Equipements/ViewEquipmentInfo/${equipment.id}`}
+                      >
+                        View Details
+                      </Link>
+                    </Popup>
+                  </Marker>
+                ))}
+              </MapContainer>
+            </Box>
+          </Center>
+        </GridItem>
+      </Grid>
     </Box>
   );
 };
