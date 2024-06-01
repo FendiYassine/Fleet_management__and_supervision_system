@@ -124,7 +124,7 @@ const AjouterEquipement = () => {
   return (
     <Box
       p={4}
-      maxW="md"
+      maxW="xl"
       mx="auto"
       bg={useColorModeValue('white', 'gray.700')}
       borderWidth={1}

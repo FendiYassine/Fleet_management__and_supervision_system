@@ -78,7 +78,7 @@
 // }
 
 // export default App;
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';
@@ -94,7 +94,11 @@ import {
 import { Maintenance, EventsOne, EventsTwo } from './pages/Maintenance';
 import Contact from './pages/ContactUs';
 import EquipmentInfo from './components/EquipmentInfo';
-import { ChakraBaseProvider, theme as chakraTheme } from '@chakra-ui/react';
+import {
+  Box,
+  ChakraBaseProvider,
+  theme as chakraTheme,
+} from '@chakra-ui/react';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -130,7 +134,7 @@ function App() {
 
   return (
     <ChakraBaseProvider theme={chakraTheme}>
-      <div className='App'>
+      <Box h='100vh' w='100vw' bg='gray.50'>
         {shouldShowSidebar() && (
           <Sidebar
             toggleSidebar={toggleSidebar}
@@ -175,7 +179,7 @@ function App() {
             />
           </Routes>
         </div>
-      </div>
+      </Box>
     </ChakraBaseProvider>
   );
 }

@@ -9,14 +9,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {
-  // Icon,
-  // Input,
-  // InputGroup,
-  // InputLeftElement,
-  Progress,
-  // Select,
-} from '@chakra-ui/react';
+import { Progress, Image, Box } from '@chakra-ui/react';
+
+const images = {
+  loaded: [
+    'Fleet.jpg',
+    'GPS.jpg',
+    'logistics.jpg',
+    'vidange.jpg',
+    'background.jpg',
+  ],
+  loading: [
+    'processed_images/Fleet_processed.jpg',
+    'processed_images/GPS_processed.jpg',
+    'processed_images/logistics_processed.jpg',
+    'processed_images/vidange_processed.jpg',
+    'processed_images/background_processed.jpg',
+  ],
+};
 
 const Login = () => {
   const [user, setUser] = useState('');
@@ -27,6 +37,7 @@ const Login = () => {
   const [sites, setSites] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState('');
   const [selectedSite, setSelectedSite] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,6 +88,15 @@ const Login = () => {
     }
   }, [selectedCompany]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex(
+        (prevIndex) => (prevIndex + 1) % images.loaded.length
+      );
+    }, 4000); // Change image every 4 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -106,9 +126,32 @@ const Login = () => {
   };
 
   return (
-    <div className='login-wrapper'>
-      <div className='background-image'></div>
-      <div className='login-form'>
+    <Box
+      className='login-wrapper'
+      position='relative'
+      w='100vw'
+      h='100vh'
+      overflow='hidden'
+    >
+      {images.loaded.map((im, index) => (
+        <Image
+          key={index}
+          src={im}
+          fallbackSrc={images.loading[index]}
+          alt='background'
+          position='absolute'
+          top='0'
+          left='0'
+          right='0'
+          bottom='0'
+          w='100%'
+          h='100%'
+          objectFit='cover'
+          transition='opacity 1s'
+          opacity={index === currentImageIndex ? 1 : 0}
+        />
+      ))}
+      <Box className='login-form' position='relative' zIndex={1}>
         {(isLoadingCompanies || isLoadingSites || !selectedCompany) && (
           <Progress size='xs' isIndeterminate w='full' mb='2' />
         )}
@@ -192,8 +235,8 @@ const Login = () => {
             Connexion
           </button>
         </form>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

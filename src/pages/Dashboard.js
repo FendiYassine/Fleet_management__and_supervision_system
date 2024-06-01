@@ -141,46 +141,104 @@ export const Dashboard = () => {
   return (
     <Box
       p={4}
-      mx="auto"
-      bg={useColorModeValue('white', 'gray.700')}
+      bg={useColorModeValue('gray.50', 'gray.700')}
       borderWidth={1}
-      borderRadius="md"
-      boxShadow="md"
+      borderRadius='md'
+      boxShadow='md'
+      h='calc(100vh - 80px)'
     >
-      <Heading as="h1" size="lg" textAlign="center" mb={6}>
-        Dashboard
-      </Heading>
-      <SimpleGrid columns={{ sm: 1, md: 2, lg: 4 }} spacing={4} mb={6}>
-        <Stat>
-          <StatLabel>Nombre d'équipements</StatLabel>
-          <StatNumber>{equipments.length}</StatNumber>
-        </Stat>
-        <Stat>
-          <StatLabel>Coût total du carburant</StatLabel>
-          <StatNumber>{totalFuelCost} TND</StatNumber>
-        </Stat>
-        <Stat>
-          <StatLabel>Coût total de maintenance</StatLabel>
-          <StatNumber>{totalMaintenanceCostFixed} TND</StatNumber>
-        </Stat>
-        <Stat>
-          <StatLabel>Équipements en maintenance</StatLabel>
-          {/* <StatNumber>{equipmentsUnderMaintenance}</StatNumber> */}
-          <StatNumber>1</StatNumber>
-        </Stat>
-        <Stat>
-          <StatLabel>Équipements disponibles</StatLabel>
-          {/* <StatNumber>{availableEquipments}</StatNumber> */}
-          <StatNumber>5</StatNumber>
-        </Stat>
-      </SimpleGrid>
-      <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-        <GridItem>
-          <Center>
-            <Box width="80%">
-              <heading as="h3" size="md">
-                Coût de maintenance par véhicule
-              </heading>
+      <Box maxW='8xl' mx='auto'>
+        <Heading as='h1' size='lg' mb={6}>
+          Dashboard
+        </Heading>
+        <SimpleGrid columns={{ sm: 1, md: 2, lg: 5 }} spacing={4} mb={6}>
+          <Stat
+            bg='gray.800'
+            shadow='lg'
+            py='2'
+            px='4'
+            borderRadius='lg'
+            border='1px solid'
+            borderColor='gray.200'
+          >
+            <StatLabel color='white' fontWeight='600'>
+              Nombre d'équipements
+            </StatLabel>
+            <StatNumber color='white'>{equipments.length}</StatNumber>
+          </Stat>
+          <Stat
+            bg='gray.800'
+            shadow='lg'
+            py='2'
+            px='4'
+            borderRadius='lg'
+            border='1px solid'
+            borderColor='gray.200'
+          >
+            <StatLabel color='white' fontWeight='600'>
+              Coût total du carburant
+            </StatLabel>
+            <StatNumber color='white'>{totalFuelCost} TND</StatNumber>
+          </Stat>
+          <Stat
+            bg='gray.800'
+            shadow='lg'
+            py='2'
+            px='4'
+            borderRadius='lg'
+            border='1px solid'
+            borderColor='gray.200'
+          >
+            <StatLabel color='white' fontWeight='600'>
+              Coût total de maintenance
+            </StatLabel>
+            <StatNumber color='white'>
+              {totalMaintenanceCostFixed} TND
+            </StatNumber>
+          </Stat>
+          <Stat
+            bg='gray.800'
+            shadow='lg'
+            py='2'
+            px='4'
+            borderRadius='lg'
+            border='1px solid'
+            borderColor='gray.200'
+          >
+            <StatLabel color='white' fontWeight='600'>
+              Équipements en maintenance
+            </StatLabel>
+            {/* <StatNumber color="white">{equipmentsUnderMaintenance}</StatNumber> */}
+            <StatNumber color='white'>1</StatNumber>
+          </Stat>
+          <Stat
+            bg='gray.800'
+            shadow='lg'
+            py='2'
+            px='4'
+            borderRadius='lg'
+            border='1px solid'
+            borderColor='gray.200'
+          >
+            <StatLabel color='white' fontWeight='600'>
+              Équipements disponibles
+            </StatLabel>
+            {/* <StatNumber color="white">{availableEquipments}</StatNumber> */}
+            <StatNumber color='white'>5</StatNumber>
+          </Stat>
+        </SimpleGrid>
+        <Grid
+          templateColumns={{
+            sm: '1fr',
+            md: '1.2fr 1fr',
+          }}
+          gap={8}
+        >
+          <GridItem shadow='lg' p='4' bg="gray.100">
+            <Box width='100%' h='100%' display='flex' flexDir='column'>
+              <Heading as='h3' size='md'>
+                Coût de maintenance par équipement
+              </Heading>
               <Bar
                 data={chartData}
                 options={{
@@ -190,47 +248,50 @@ export const Dashboard = () => {
                     y: { title: { display: true, text: 'Coût (TND)' } },
                   },
                 }}
+                style={{
+                  verticalAlign: 'middle',
+                }}
               />
             </Box>
-          </Center>
-        </GridItem>
-        <GridItem>
-          <Center>
-            <Box width="100%">
-              <heading as="h3" size="md">
-                Carte des équipements
-              </heading>
-              <MapContainer
-                center={[34.0, 9.0]}
-                zoom={6}
-                style={{ height: '450px', width: '100%' }}
-              >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                {equipments.map((equipment) => (
-                  <Marker
-                    key={equipment.id}
-                    position={[
-                      equipment.PositionGPS.Latitude,
-                      equipment.PositionGPS.Longitude,
-                    ]}
-                    icon={customIcon}
-                  >
-                    <Popup>
-                      {equipment.Matricule} {equipment.Marque}{' '}
-                      {equipment.Modele} -{' '}
-                      <Link
-                        to={`/Equipements/ViewEquipmentInfo/${equipment.id}`}
-                      >
-                        View Details
-                      </Link>
-                    </Popup>
-                  </Marker>
-                ))}
-              </MapContainer>
-            </Box>
-          </Center>
-        </GridItem>
-      </Grid>
+          </GridItem>
+          <GridItem shadow='lg' p='4' bg="gray.100">
+            <Center>
+              <Box width='100%'>
+                <Heading as='h3' size='md'>
+                  Carte des équipements
+                </Heading>
+                <MapContainer
+                  center={[34.0, 9.0]}
+                  zoom={6}
+                  style={{ height: '450px', width: '100%' }}
+                >
+                  <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+                  {equipments.map((equipment) => (
+                    <Marker
+                      key={equipment.id}
+                      position={[
+                        equipment.PositionGPS.Latitude,
+                        equipment.PositionGPS.Longitude,
+                      ]}
+                      icon={customIcon}
+                    >
+                      <Popup>
+                        {equipment.Matricule} {equipment.Marque}{' '}
+                        {equipment.Modele} -{' '}
+                        <Link
+                          to={`/Equipements/ViewEquipmentInfo/${equipment.id}`}
+                        >
+                          View Details
+                        </Link>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
+              </Box>
+            </Center>
+          </GridItem>
+        </Grid>
+      </Box>
     </Box>
   );
 };
