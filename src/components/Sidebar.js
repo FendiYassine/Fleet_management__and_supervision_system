@@ -270,7 +270,7 @@ const Sidebar = ({ toggleSidebar, sidebarOpen, sidebarRef, navbarRef }) => {
           </LogoContainer>
           <UserMenu>
             <FaIcons.FaUserCircle size={30} />
-            <Username>{username.toUpperCase()}</Username>
+            <Username>{username}</Username>
             <DropdownMenu>
               <DropdownItem to="/" onClick={handleLogout}>
                 Déconnexion

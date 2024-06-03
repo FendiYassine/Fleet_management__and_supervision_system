@@ -118,6 +118,7 @@ const Login = () => {
       );
       const { access_token } = response.data;
       localStorage.setItem('token', access_token);
+      localStorage.setItem('name', user);
       navigate('/Dashboard');
     } catch (error) {
       console.error('Login failed:', error);
@@ -127,44 +128,44 @@ const Login = () => {
 
   return (
     <Box
-      className='login-wrapper'
-      position='relative'
-      w='100vw'
-      h='100vh'
-      overflow='hidden'
+      className="login-wrapper"
+      position="relative"
+      w="100vw"
+      h="100vh"
+      overflow="hidden"
     >
       {images.loaded.map((im, index) => (
         <Image
           key={index}
           src={im}
           fallbackSrc={images.loading[index]}
-          alt='background'
-          position='absolute'
-          top='0'
-          left='0'
-          right='0'
-          bottom='0'
-          w='100%'
-          h='100%'
-          objectFit='cover'
-          transition='opacity 1s'
+          alt="background"
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          w="100%"
+          h="100%"
+          objectFit="cover"
+          transition="opacity 1s"
           opacity={index === currentImageIndex ? 1 : 0}
         />
       ))}
-      <Box className='login-form' position='relative' zIndex={1}>
+      <Box className="login-form" position="relative" zIndex={1}>
         {(isLoadingCompanies || isLoadingSites || !selectedCompany) && (
-          <Progress size='xs' isIndeterminate w='full' mb='2' />
+          <Progress size="xs" isIndeterminate w="full" mb="2" />
         )}
         <form onSubmit={handleLogin}>
-          <div className='form-group'>
-            <div className='input-group'>
-              <div className='input-group-prepend'>
-                <span className='input-group-text'>
+          <div className="form-group">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
                   <FontAwesomeIcon icon={faBuilding} />
                 </span>
               </div>
               <select
-                className='form-control'
+                className="form-control"
                 value={selectedCompany}
                 onChange={(e) => setSelectedCompany(e.target.value)}
               >
@@ -177,15 +178,15 @@ const Login = () => {
             </div>
           </div>
 
-          <div className='form-group'>
-            <div className='input-group'>
-              <div className='input-group-prepend'>
-                <span className='input-group-text'>
+          <div className="form-group">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
                   <FontAwesomeIcon icon={faMapMarkerAlt} />
                 </span>
               </div>
               <select
-                className='form-control'
+                className="form-control"
                 value={selectedSite}
                 onChange={(e) => setSelectedSite(e.target.value)}
               >
@@ -197,41 +198,41 @@ const Login = () => {
               </select>
             </div>
           </div>
-          <div className='form-group'>
-            <div className='input-group'>
-              <div className='input-group-prepend'>
-                <span className='input-group-text'>
+          <div className="form-group">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
                   <FontAwesomeIcon icon={faUser} />
                 </span>
               </div>
               <input
-                type='text'
-                className='form-control'
-                placeholder='Utilisateur'
+                type="text"
+                className="form-control"
+                placeholder="Utilisateur"
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
                 required
               />
             </div>
           </div>
-          <div className='form-group'>
-            <div className='input-group'>
-              <div className='input-group-prepend'>
-                <span className='input-group-text'>
+          <div className="form-group">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
                   <FontAwesomeIcon icon={faLock} />
                 </span>
               </div>
               <input
-                type='password'
-                className='form-control'
-                placeholder='Mot de passe'
+                type="password"
+                className="form-control"
+                placeholder="Mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
           </div>
-          <button type='submit' className='btn btn-primary btn-block'>
+          <button type="submit" className="btn btn-primary btn-block">
             Connexion
           </button>
         </form>
