@@ -85,13 +85,13 @@ const MenuRow = ({ equipement, onEdit, showToast }) => {
             icon={<Icon icon={LuPenLine} fontSize="lg" color="gray.400" />}
             onClick={editItem}
           >
-            Edit
+            Modifier
           </MenuItem>
           <ConfirmMenuItem
             icon={<Icon icon={LuDelete} fontSize="lg" color="gray.400" />}
             onClick={deleteItem}
           >
-            Delete
+            Supprimer
           </ConfirmMenuItem>
         </MenuList>
       </Portal>
