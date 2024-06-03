@@ -78,7 +78,7 @@
 // }
 
 // export default App;
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';

@@ -80,7 +80,6 @@ import {
   Stack,
   Textarea,
   useColorModeValue,
-  VStack,
   useToast,
 } from '@chakra-ui/react';
 
@@ -88,15 +87,15 @@ const Contact = () => {
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
   const toast = useToast();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContactInfo(prevState => ({
+    setContactInfo((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -117,15 +116,15 @@ const Contact = () => {
   return (
     <Box
       p={8}
-      maxW='md'
-      mx='auto'
+      maxW="md"
+      mx="auto"
       bg={useColorModeValue('white', 'gray.700')}
       borderWidth={1}
-      borderRadius='md'
-      boxShadow='md'
+      borderRadius="md"
+      boxShadow="md"
       mt={8}
     >
-      <Heading as='h3' size='lg' textAlign='center' mb={6}>
+      <Heading as="h3" size="lg" textAlign="center" mb={6}>
         Contact Us
       </Heading>
       <Stack spacing={4} as="form" onSubmit={handleSubmit}>

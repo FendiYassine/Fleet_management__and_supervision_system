@@ -14,7 +14,6 @@ import {
   StatLabel,
   StatNumber,
   useColorModeValue,
-  Select,
   Grid,
   GridItem,
 } from '@chakra-ui/react';
