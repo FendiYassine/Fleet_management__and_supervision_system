@@ -143,88 +143,88 @@ export const Dashboard = () => {
       p={4}
       bg={useColorModeValue('gray.50', 'gray.700')}
       borderWidth={1}
-      borderRadius='md'
-      boxShadow='md'
-      h='calc(100vh - 80px)'
+      borderRadius="md"
+      boxShadow="md"
+      h="calc(100vh - 80px)"
     >
-      <Box maxW='8xl' mx='auto'>
-        <Heading as='h1' size='lg' mb={6}>
+      <Box maxW="8xl" mx="auto">
+        <Heading as="h1" size="lg" mb={6}>
           Dashboard
         </Heading>
         <SimpleGrid columns={{ sm: 1, md: 2, lg: 5 }} spacing={4} mb={6}>
           <Stat
-            bg='gray.800'
-            shadow='lg'
-            py='2'
-            px='4'
-            borderRadius='lg'
-            border='1px solid'
-            borderColor='gray.200'
+            bg="gray.800"
+            shadow="lg"
+            py="2"
+            px="4"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.200"
           >
-            <StatLabel color='white' fontWeight='600'>
+            <StatLabel color="white" fontWeight="600">
               Nombre d'équipements
             </StatLabel>
-            <StatNumber color='white'>{equipments.length}</StatNumber>
+            <StatNumber color="white">{equipments.length}</StatNumber>
           </Stat>
           <Stat
-            bg='gray.800'
-            shadow='lg'
-            py='2'
-            px='4'
-            borderRadius='lg'
-            border='1px solid'
-            borderColor='gray.200'
+            bg="gray.800"
+            shadow="lg"
+            py="2"
+            px="4"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.200"
           >
-            <StatLabel color='white' fontWeight='600'>
+            <StatLabel color="white" fontWeight="600">
               Coût total du carburant
             </StatLabel>
-            <StatNumber color='white'>{totalFuelCost} TND</StatNumber>
+            <StatNumber color="white">{totalFuelCost} TND</StatNumber>
           </Stat>
           <Stat
-            bg='gray.800'
-            shadow='lg'
-            py='2'
-            px='4'
-            borderRadius='lg'
-            border='1px solid'
-            borderColor='gray.200'
+            bg="gray.800"
+            shadow="lg"
+            py="2"
+            px="4"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.200"
           >
-            <StatLabel color='white' fontWeight='600'>
+            <StatLabel color="white" fontWeight="600">
               Coût total de maintenance
             </StatLabel>
-            <StatNumber color='white'>
+            <StatNumber color="white">
               {totalMaintenanceCostFixed} TND
             </StatNumber>
           </Stat>
           <Stat
-            bg='gray.800'
-            shadow='lg'
-            py='2'
-            px='4'
-            borderRadius='lg'
-            border='1px solid'
-            borderColor='gray.200'
+            bg="gray.800"
+            shadow="lg"
+            py="2"
+            px="4"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.200"
           >
-            <StatLabel color='white' fontWeight='600'>
+            <StatLabel color="white" fontWeight="600">
               Équipements en maintenance
             </StatLabel>
             {/* <StatNumber color="white">{equipmentsUnderMaintenance}</StatNumber> */}
-            <StatNumber color='white'>1</StatNumber>
+            <StatNumber color="white">1</StatNumber>
           </Stat>
           <Stat
-            bg='gray.800'
-            shadow='lg'
-            py='2'
-            px='4'
-            borderRadius='lg'
-            border='1px solid'
-            borderColor='gray.200'
+            bg="gray.800"
+            shadow="lg"
+            py="2"
+            px="4"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.200"
           >
-            <StatLabel color='white' fontWeight='600'>
+            <StatLabel color="white" fontWeight="600">
               Équipements disponibles
             </StatLabel>
             {/* <StatNumber color="white">{availableEquipments}</StatNumber> */}
-            <StatNumber color='white'>5</StatNumber>
+            <StatNumber color="white">6</StatNumber>
           </Stat>
         </SimpleGrid>
         <Grid
@@ -234,9 +234,9 @@ export const Dashboard = () => {
           }}
           gap={8}
         >
-          <GridItem shadow='lg' p='4' bg="gray.100">
-            <Box width='100%' h='100%' display='flex' flexDir='column'>
-              <Heading as='h3' size='md'>
+          <GridItem shadow="lg" p="4" bg="gray.100">
+            <Box width="100%" h="100%" display="flex" flexDir="column">
+              <Heading as="h3" size="md">
                 Coût de maintenance par équipement
               </Heading>
               <Bar
@@ -254,10 +254,10 @@ export const Dashboard = () => {
               />
             </Box>
           </GridItem>
-          <GridItem shadow='lg' p='4' bg="gray.100">
+          <GridItem shadow="lg" p="4" bg="gray.100">
             <Center>
-              <Box width='100%'>
-                <Heading as='h3' size='md'>
+              <Box width="100%">
+                <Heading as="h3" size="md">
                   Carte des équipements
                 </Heading>
                 <MapContainer
@@ -265,7 +265,7 @@ export const Dashboard = () => {
                   zoom={6}
                   style={{ height: '450px', width: '100%' }}
                 >
-                  <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                   {equipments.map((equipment) => (
                     <Marker
                       key={equipment.id}
