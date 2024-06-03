@@ -248,7 +248,7 @@ const Sidebar = ({ toggleSidebar, sidebarOpen, sidebarRef, navbarRef }) => {
   useEffect(() => {
     const storedName = localStorage.getItem('name');
     if (storedName) {
-      setUsername(storedName);
+      setUsername(storedName.replace(/['"]+/g, ''));
     }
   }, []);
 
@@ -270,7 +270,7 @@ const Sidebar = ({ toggleSidebar, sidebarOpen, sidebarRef, navbarRef }) => {
           </LogoContainer>
           <UserMenu>
             <FaIcons.FaUserCircle size={30} />
-            <Username>{username}</Username>
+            <Username>{username.toUpperCase()}</Username>
             <DropdownMenu>
               <DropdownItem to="/" onClick={handleLogout}>
                 Déconnexion
