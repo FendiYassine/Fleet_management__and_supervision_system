@@ -149,7 +149,7 @@ export const Dashboard = () => {
     >
       <Box maxW="8xl" mx="auto">
         <Heading as="h1" size="lg" mb={6}>
-          Dashboard
+          Tableau de board
         </Heading>
         <SimpleGrid columns={{ sm: 1, md: 2, lg: 5 }} spacing={4} mb={6}>
           <Stat

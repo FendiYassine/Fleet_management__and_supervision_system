@@ -106,7 +106,7 @@ const SuiviMaintenance = () => {
                 <Th>Description</Th>
                 <Th>
                   <Checkbox isChecked={selectAll} onChange={toggleSelectAll}>
-                    Select
+                    Selectionner
                   </Checkbox>
                 </Th>
               </Tr>
@@ -129,7 +129,7 @@ const SuiviMaintenance = () => {
           {selectedMaintenances.length > 0 && (
             <Flex justify="center">
               <Button colorScheme="teal" onClick={onOpen} width="fit-content">
-                Plan Intervention
+                Plannifier l'Intervention
               </Button>
             </Flex>
           )}
