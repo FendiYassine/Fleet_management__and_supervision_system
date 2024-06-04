@@ -78,7 +78,7 @@
 // }
 
 // export default App;
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';
@@ -134,7 +134,7 @@ function App() {
 
   return (
     <ChakraBaseProvider theme={chakraTheme}>
-      <Box h='100vh' w='100vw' bg='gray.50'>
+      <Box h="130vh" w="100vw" bg="gray.50">
         {shouldShowSidebar() && (
           <Sidebar
             toggleSidebar={toggleSidebar}
@@ -151,30 +151,30 @@ function App() {
           }
         >
           <Routes>
-            <Route path='/' element={<Login />} />
-            <Route path='/Dashboard' element={<Dashboard />} />
-            <Route path='/Equipements' element={<Equipements />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/Equipements" element={<Equipements />} />
             <Route
-              path='/Equipements/AjouterEquipement'
+              path="/Equipements/AjouterEquipement"
               element={<AjouterEquipement />}
             />
             <Route
-              path='/Equipements/ConsulterEquipement'
+              path="/Equipements/ConsulterEquipement"
               element={<ConsulterEquipement />}
             />
-            <Route path='/Equipements/services3' element={<ServicesThree />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/maintenances' element={<Maintenance />} />
+            <Route path="/Equipements/services3" element={<ServicesThree />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/maintenances" element={<Maintenance />} />
             <Route
-              path='/maintenances/ProgrammerIntervention'
+              path="/maintenances/ProgrammerIntervention"
               element={<EventsOne />}
             />
             <Route
-              path='/maintenances/SuiviMaintenance'
+              path="/maintenances/SuiviMaintenance"
               element={<EventsTwo />}
             />
             <Route
-              path='/Equipements/ViewEquipmentInfo/:equipmentId'
+              path="/Equipements/ViewEquipmentInfo/:equipmentId"
               element={<EquipmentInfo />}
             />
           </Routes>

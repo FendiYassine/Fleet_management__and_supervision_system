@@ -144,7 +144,7 @@ export const Dashboard = () => {
       borderWidth={1}
       borderRadius="md"
       boxShadow="md"
-      h="calc(100vh - 80px)"
+      h="calc(110vh - 80px)"
     >
       <Box maxW="8xl" mx="auto">
         <Heading as="h1" size="lg" mb={6}>
