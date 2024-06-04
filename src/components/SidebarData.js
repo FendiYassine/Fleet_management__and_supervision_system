@@ -37,6 +37,7 @@ export const SidebarData = [
       },
     ],
   },
+  
   {
     title: 'Maintenance',
     path: '/maintenances',
@@ -60,15 +61,35 @@ export const SidebarData = [
       },
     ],
   },
+
+
+  {
+    title: 'Gestion du carburant',
+    path: '/carburant',
+    icon: <FaIcons.FaGasPump  />,
+
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+
+    subNav: [
+      {
+        title: "Ajouter une opération d'approvisionnement",
+        path: '/carburant/AjouterCarburant',
+        icon: <AiIcons.AiFillSchedule  />,
+        cName: 'sub-nav',
+      },
+      {
+        title: "Suivi des opérations de d'approvisionnement",
+        path: '/carburant/SuiviCarburant',
+        icon: <FaIcons.FaListAlt  />,
+        cName: 'sub-nav',
+      },
+    ],
+  },
+
   {
     title: 'Contact',
     path: '/contact',
     icon: <FaIcons.FaPhone />,
   },
-
-  // {
-  //   title: 'Support',
-  //   path: '/support',
-  //   icon: <IoIcons.IoMdHelpCircle />,
-  // },
 ];
