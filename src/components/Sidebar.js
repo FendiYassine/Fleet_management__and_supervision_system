@@ -64,7 +64,7 @@ const DropdownItem = styled(Link)`
 
 const SidebarNav = styled.nav`
   background: #15171c;
-  width: 250px;
+  width: 280px;
   height: 100vh;
   display: flex;
   justify-content: center;

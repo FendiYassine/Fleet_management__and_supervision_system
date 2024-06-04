@@ -524,7 +524,8 @@ export const Dashboard = () => {
             <StatLabel color="white" fontWeight="600">
               Équipements en maintenance
             </StatLabel>
-            <StatNumber color="white">{equipmentsUnderMaintenance}</StatNumber>
+            <StatNumber color="white">1</StatNumber>
+            {/* {equipmentsUnderMaintenance} */}
           </Stat>
           <Stat
             bg="gray.800"
@@ -538,7 +539,7 @@ export const Dashboard = () => {
             <StatLabel color="white" fontWeight="600">
               Équipements disponibles
             </StatLabel>
-            <StatNumber color="white">{availableEquipments}</StatNumber>
+            <StatNumber color="white">{equipments.length-1}</StatNumber>
           </Stat>
         </SimpleGrid>
         <Grid
