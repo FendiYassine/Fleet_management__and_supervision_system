@@ -129,7 +129,7 @@ const AjouterCarburant = () => {
       boxShadow="md"
     >
       <Heading as="h3" size="lg" textAlign="center" mb={6}>
-        Nouvelle Opération d'Alimentation Carburant
+        Nouvelle opération d'achat du carburant
       </Heading>
       <Stack spacing={4}>
         <FormControl>
