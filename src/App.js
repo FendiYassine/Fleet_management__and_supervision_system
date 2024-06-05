@@ -18,8 +18,8 @@ import {
   ChakraBaseProvider,
   theme as chakraTheme,
 } from '@chakra-ui/react';
-
-import {Alimentation, SuiviOperation } from './pages/carburant';
+import  EquipmentInfo  from './components/EquipmentInfo';
+import { Alimentation, SuiviOperation } from './pages/carburant';
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
@@ -93,13 +93,12 @@ function App() {
               path="/maintenances/SuiviMaintenance"
               element={<EventsTwo />}
             />
-            {/* <Route
+            <Route
               path="/Equipements/ViewEquipmentInfo/:equipmentId"
               element={<EquipmentInfo />}
-            /> */}
+            />
 
-
-<Route path="/carburant" element={<carburant />} />
+            <Route path="/carburant" element={<carburant />} />
             <Route
               path="/carburant/AjouterCarburant"
               element={<Alimentation />}
@@ -108,10 +107,6 @@ function App() {
               path="/carburant/SuiviCarburant"
               element={<SuiviOperation />}
             />
-            {/* <Route
-              path="/Equipements/ViewEquipmentInfo/:equipmentId"
-              element={<EquipmentInfo />}
-            /> */}
           </Routes>
         </div>
       </Box>

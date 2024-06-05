@@ -73,7 +73,6 @@
 
 // export default EquipmentInfo;
 
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ref, onValue } from 'firebase/database';
@@ -93,17 +92,17 @@ import {
 const InfoCard = ({ title, value, gauge }) => (
   <Box
     p={4}
-    borderWidth='1px'
-    borderRadius='md'
-    boxShadow='md'
+    borderWidth="1px"
+    borderRadius="md"
+    boxShadow="md"
     bg={useColorModeValue('white', 'gray.800')}
-    textAlign='center'
+    textAlign="center"
   >
-    <Text fontWeight='bold' mb={2}>
+    <Text fontWeight="bold" mb={2}>
       {title}
     </Text>
     {gauge}
-    <Text mt={2} fontSize='lg' fontWeight='semibold'>
+    <Text mt={2} fontSize="lg" fontWeight="semibold">
       {value}
     </Text>
   </Box>
@@ -132,11 +131,11 @@ const EquipmentInfo = () => {
   };
 
   return (
-    <Box p={4} maxW='7xl' mx='auto'>
+    <Box p={4} maxW="7xl" mx="auto">
       <Flex
         flexDir={{ base: 'column', sm: 'row' }}
-        justify='center'
-        alignItems='center'
+        justify="center"
+        alignItems="center"
         mb={4}
         gap={4}
       >
@@ -147,46 +146,52 @@ const EquipmentInfo = () => {
         >
           Previous
         </Button>
-        <Heading as='h2' size='lg' flex='1' m={0}>
+        <Heading as="h2" size="lg" flex="1" m={0}>
           Détails de l'équipement sélectionné
         </Heading>
-        <Box width='75px' />
+        <Box width="75px" />
       </Flex>
       <Grid
-        templateColumns='repeat(auto-fit, minmax(250px, 1fr))'
+        templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
         gap={6}
         mb={6}
       >
         <InfoCard
-          title='Niveau de carburant'
+          title="Niveau de carburant"
           value={`${equipment.OBDParameter.FuelLevel}%`}
           gauge={
             <GaugeChart
-              id='fuel-level-gauge'
+              id="fuel-level-gauge"
               percent={equipment.OBDParameter.FuelLevel / 100}
               textColor={textColor}
             />
           }
         />
         <InfoCard
-          title='Température de liquide de refroidissement'
+          title="Température de liquide de refroidissement"
           value={`${equipment.OBDParameter.EngineCoolantTemperature}°C`}
           gauge={
             <GaugeChart
-              id='coolant-temperature-gauge'
+              id="coolant-temperature-gauge"
               percent={equipment.OBDParameter.EngineCoolantTemperature / 200}
               textColor={textColor}
             />
           }
         />
-        <InfoCard title='Vitesse' value={`${equipment.OBDParameter.Speed} km/h`} />
-        <InfoCard title='Régime moteur' value={`${equipment.OBDParameter.RPM} RPM`} />
+        <InfoCard
+          title="Vitesse"
+          value={`${equipment.OBDParameter.Speed} km/h`}
+        />
+        <InfoCard
+          title="Régime moteur"
+          value={`${equipment.OBDParameter.RPM} RPM`}
+        />
         <InfoCard
           title="Pression du collecteur d'admission"
           value={`${equipment.OBDParameter.IntakeManifoldPressure} kPa`}
         />
-        <InfoCard
-          title='Pression de carburant'
+        <InfoCard 
+          title="Pression de carburant"
           value={`${equipment.OBDParameter.FuelPressure} PSI`}
         />
       </Grid>
@@ -195,4 +200,3 @@ const EquipmentInfo = () => {
 };
 
 export default EquipmentInfo;
-
