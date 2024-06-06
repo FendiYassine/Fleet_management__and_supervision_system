@@ -48,13 +48,15 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: 'Programmer une intervention',
+        // title: 'Programmer une intervention',
+        title: 'Maintenance curative',
         path: '/maintenances/ProgrammerIntervention',
         icon: <AiIcons.AiFillSchedule  />,
         cName: 'sub-nav',
       },
       {
-        title: 'Suivi des opérations de maintenance',
+        // title: 'Suivi des opérations de maintenance',
+        title: 'Maintenance préventive',
         path: '/maintenances/SuiviMaintenance',
         icon: <FaIcons.FaListAlt  />,
         cName: 'sub-nav',

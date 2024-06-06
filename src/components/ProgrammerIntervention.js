@@ -194,7 +194,7 @@ const ProgrammerIntervention = () => {
       boxShadow="md"
     >
       <Heading as="h3" size="lg" textAlign="center" mb={6}>
-        Nouvelle Intervention
+        Programmer une intervention de maintenance Curative
       </Heading>
       <Stack spacing={4}>
         <FormControl>
