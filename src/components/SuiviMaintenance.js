@@ -47,6 +47,16 @@ const SuiviMaintenance = () => {
     fetchEquipements();
   }, []);
 
+  // const getSuggestedMaintenances = () => {
+  //   let suggestions = [];
+  //   const vehicle = equipements.find((veh) => veh.id === selectedEquipement);
+  //   maintenanceData.forEach(({ code, intervalKm, description }) => {
+  //     if (vehicle && vehicle.Kilometrage >= intervalKm) {
+  //       suggestions.push({ code, description, intervalKm });
+  //     }
+  //   });
+  //   return suggestions;
+  // };
   const getSuggestedMaintenances = () => {
     let suggestions = [];
     const vehicle = equipements.find((veh) => veh.id === selectedEquipement);
@@ -56,12 +66,12 @@ const SuiviMaintenance = () => {
       }
     });
     return suggestions;
-  };
+};
 
   const handleMaintenanceSelection = (code) => {
     setSelectedMaintenances((prev) => {
-      const exists = prev.some((m) => m.code === code);
-      return exists ? prev.filter((m) => m.code !== code) : [...prev, code];
+      const exists = prev.includes(code);
+      return exists ? prev.filter((m) => m !== code) : [...prev, code];
     });
   };
 
