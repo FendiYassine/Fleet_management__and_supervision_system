@@ -25,12 +25,12 @@ This project is a **vehicle fleet management and supervision system** designed t
 
 ## 📽️ Demonstration Video
 
-Below is a demonstration of the system's functionalities:
+Watch the demonstration video showcasing the functionalities of the Fleet Management and Supervision System by clicking the link below:
 
-[![Demo Video](https://img.youtube.com/vi/placeholder/0.jpg)](demo_video.mp4)
+👉 [View Demo Video on Google Drive](https://drive.google.com/drive/folders/1MeX67Cl3A16CO6lcsN24LTx58wv1haDA?usp=drive_link)
 
-Click the link below to download or view the video locally:  
-**[Download Demo Video](demo_video.mp4)**
+*Note: Make sure the video is shared publicly or with "Anyone with the link" to allow viewers to access it.*
+
 
   
 
