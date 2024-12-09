@@ -25,12 +25,10 @@ This project is a **vehicle fleet management and supervision system** designed t
 
 ## 📽️ Demo  
 
-![System Demonstration](./demo_video.mp4)  
+![System Demonstration](demo_video.mp4)  
 
 > The demo video provides a complete walkthrough of the system, showcasing all major functionalities, including login, dashboard, vehicle management, maintenance, and fuel management.  
-
-**How to view the video:**  
-Ensure the video file (`demo_video.mp4`) is in the root directory of this repository. Simply click on the file in the GitHub repo or download it locally to play.  
+  
 
 ---
 
