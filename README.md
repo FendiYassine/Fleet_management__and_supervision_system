@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# 🚗 Fleet Management and Supervision System  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📖 Description  
+This project is a **vehicle fleet management and supervision system** designed to streamline the operations of fleet-based organizations. It integrates **vehicle data acquisition**, **real-time GPS tracking**, and a **web-based interface** to manage, monitor, and optimize fleet performance.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🌟 Features  
+- **Vehicle Management**:  
+  - Add, update, delete, and view vehicle details such as license plate, model, year, mileage, GPS position, and engine parameters.  
+- **Real-Time Monitoring**:  
+  - Monitor vehicles' GPS positions and key engine metrics in real time.  
+- **Maintenance Management**:  
+  - Schedule and manage both preventive and curative maintenance interventions.  
+  - Receive maintenance suggestions based on vehicle mileage.  
+- **Fuel Management**:  
+  - Track fuel supply operations with details like date, quantity, and associated costs.  
+  - Automatically calculate fuel quantities based on predefined prices for diesel and gasoline.  
+- **User-Friendly Interface**:  
+  - Responsive and intuitive web application built with **React** and styled with **Chakra UI**.  
+- **Firebase Integration**:  
+  - Leverages Firebase for real-time data storage and retrieval.  
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📽️ Demo  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![System Demonstration](./demo_video.mp4)  
 
-### `npm test`
+> The demo video provides a complete walkthrough of the system, showcasing all major functionalities, including login, dashboard, vehicle management, maintenance, and fuel management.  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**How to view the video:**  
+Ensure the video file (`demo_video.mp4`) is in the root directory of this repository. Simply click on the file in the GitHub repo or download it locally to play.  
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠️ Tech Stack  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend  
+- **React JS**  
+- **Chakra UI**  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend & Database  
+- **Firebase**  
 
-### `npm run eject`
+### Tools and Frameworks  
+- **Node-RED**: For processing GPS and OBD-II data.  
+- **Python**: For OBD-II data acquisition using pyobd.  
+- **SIM808 Module**: For GPS and GSM data collection.  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Communication Protocols  
+- **ELM327**: For OBD-II vehicle data acquisition.  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🚀 How to Run  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/FendiYassine/Fleet_management__and_supervision_system.git
+   cd Fleet_management__and_supervision_system
+2. Install dependencies for the React application:
+   ```bash
+    npm install
+3. Configure Firebase by adding your firebaseConfig object to the code.
+4. Start the React application:
+   ```bash
+    npm run start
 
-## Learn More
+5. Set up Node-RED with the provided flow files to process GPS and OBD-II data.
+6. Deploy the application and monitor the system.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📈 Project Highlights
+* Provides real-time insights into fleet performance and vehicle health.
+* Improves operational efficiency with predictive maintenance.
+* Environmentally conscious design with minimal hardware power consumption.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 👤 Author  
 
-### Code Splitting
+**Yassine Fendi**  
+- [GitHub](https://github.com/FendiYassine)  
+- [LinkedIn](https://www.linkedin.com/in/yassine-fendi-25141a241/)  
+- [Email](mailto:yassine.fendi@edu.dsti.institute)  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🤝 Contributions  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Contributions are welcome! Feel free to fork the repository and submit a pull request.  
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ 
